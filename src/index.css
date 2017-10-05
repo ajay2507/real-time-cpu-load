@@ -3,3 +3,10 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.heading{
+    font-family: 'Raleway Dots', cursive;
+    font-size: 60px;
+    color: #CFF800;
+    text-align: center;
+}

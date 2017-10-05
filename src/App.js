@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import socketIOClient from "socket.io-client";
-import Header from './Header';
 import LoadMeter from './LoadMeter';
 
 class App extends Component {
@@ -27,7 +26,7 @@ class App extends Component {
     console.log(this.state);
     return (
       <div>
-        <Header />
+        <LoadMeter value={this.state.response} />
         <h1>Ajay kumar</h1>
       </div>
     );

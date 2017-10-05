@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
-const initialLoad = require('./cpu_load');
+const initialLoad = require('./cpu_load')();
 
 app.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
@@ -20,7 +20,7 @@ app.use(function(req, res, next) {
         next();
 });
 
-console.log(initialLoad());
+//console.log(initialLoad());
 
 // Redirect all non api requests to index file in build folder
 app.get('*', function(req, res) {
@@ -49,7 +49,7 @@ io.on("connection", socket => {
 
 const calcLoad = async socket => {
   try {
-        let endLoad = initialLoad();
+        let endLoad = require('./cpu_load')();
     	let idleDifference = endLoad.idle - initialLoad.idle;
         let totalDifference = endLoad.total - initialLoad.total;
         let cpuLoad = 100 - ~~(100 * idleDifference / totalDifference);
