@@ -12,34 +12,38 @@ class App extends Component {
     super();
     this.state = {
       CPUload: false,
+      count:0,
       endpoint: "http://127.0.0.1:8000",
-      valueArray:[]
+      
     };
   }
 
+  // Execute after the component gets mounted
   componentDidMount() {
-    console.log("componentdidmount");
+    
     const { endpoint } = this.state;
+    // configure socket on client side
     const socket = socketIOClient(endpoint, {transports: ['websocket', 'polling', 'flashsocket']});
     socket.on("FromAPI", data => {
-      let array = this.state.valueArray;
+      let array = this.state;
       array.push(this.state);
       if(array.length > 4){
+         this.setState({ count: 0});
          array.shift();
       }
-      this.setState({CPUload: data, valueArray: array });
+      this.setState({CPUload: data, count:this.state.count+1, valueArray: array });
   })
 
   }
 
 
   render() {
-    console.log("render");
-    console.log(this.state);
+    
     return (
       <div>
         <LoadMeter className="textCenter" value={this.state.CPUload} />
         {this.state.CPUload && <LineChartComponent className="textCenter" value={this.state.valueArray} />}
+        {!this.state.CPUload && <div>Loading....</div>} 
       </div>
     );
   }

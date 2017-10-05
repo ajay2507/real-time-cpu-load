@@ -15,3 +15,11 @@ body {
 .textCenter{
 	text-align: center;
 }
+
+.speedometer{
+	height:250px;
+}
+
+.lineChart{
+	left:300px;
+}

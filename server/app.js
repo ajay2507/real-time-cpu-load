@@ -21,12 +21,11 @@ app.use(function(req, res, next) {
         next();
 });
 
-//console.log(initialLoad());
-
 // Redirect all non api requests to index file in build folder
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
+
 // start our server
 /*const server = http.createServer(app).listen(port, function() {
   console.log('Express server listening on port ' + port);
@@ -36,8 +35,8 @@ const server = http.createServer(app);
 //include socket for real time data transfer
 const io = socketIo(server);
 
+
 io.on("connection", socket => {
-   console.log("inside io"); 
   console.log("New client connected"), setInterval(
     () => {
     	calcLoad(socket);
