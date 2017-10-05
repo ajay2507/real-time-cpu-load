@@ -29,7 +29,7 @@ class App extends Component {
       let array = this.state.valueArray;
       array.push(this.state);
       if(array.length > 4){
-         this.setState({ count: 0,  valueArray: array });
+         this.setState({ valueArray: array });
          array.shift();
       }
       this.setState({CPUload: data, count:this.state.count+1});
@@ -43,8 +43,8 @@ class App extends Component {
     return (
       <div>
         <LoadMeter className="textCenter" value={this.state.CPUload} />
-        {this.state.CPUload && <LineChartComponent className="textCenter" value={this.state.valueArray} />}
-        {!this.state.CPUload && <div>Loading....</div>} 
+        {this.state.valueArray.length > 3 && <LineChartComponent className="textCenter" value={this.state.valueArray} />}
+        {this.state.valueArray.length < 3 && <div className="textCenter">Fetching Real time data....</div>} 
       </div>
     );
   }
