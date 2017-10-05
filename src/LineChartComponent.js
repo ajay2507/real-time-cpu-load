@@ -3,6 +3,8 @@ import Header from './Header';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip,Legend  } from 'recharts';
 import './index.css';
 
+
+/* Component for Line Chart */
 class LineChartComponent extends Component {
   
   constructor(props) {

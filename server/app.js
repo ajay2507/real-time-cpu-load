@@ -3,7 +3,7 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const path = require('path');
 const socketIo = require("socket.io");
-
+// load express
 const app = express();
 const port = process.env.PORT || 8000;
 app.use(bodyParser.json());

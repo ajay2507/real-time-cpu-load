@@ -3,6 +3,7 @@ import ReactSpeedometer from "react-d3-speedometer";
 import Header from './Header';
 import './index.css';
 
+/* Component for Meter chart */
 class LoadMeter extends Component {
   render() {
   	//console.log("Load meter");
