@@ -10,11 +10,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
-const cpu = require('./cpu_load');
+const initialLoad = require('./cpu_load');
 
 
 
-console.log(cpu());
+console.log(initialLoad());
 
 // Redirect all non api requests to index file in build folder
 app.get('*', function(req, res) {
@@ -32,11 +32,28 @@ const io = socketIo(server);
 io.on("connection", socket => {
    console.log("inside io"); 
   console.log("New client connected"), setInterval(
-    () => cpu(socket),
-    10000
+    () => {
+    	calcLoad(socket);
+    },
+    1000
   );
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
+
+
+const calcLoad = async socket => {
+  try {
+        let endLoad = initialLoad();
+    	let idleDifference = endLoad.idle - initialLoad.idle;
+        let totalDifference = endLoad.total - initialLoad.total;
+        let cpuLoad = 100 - ~~(100 * idleDifference / totalDifference);
+        console.log("**Percentage**"+cpuLoad);
+    
+    socket.emit("FromAPI", cpuLoad);
+  } catch (error) {
+    console.error(`Error: ${error.code}`);
+  }
+};
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
 

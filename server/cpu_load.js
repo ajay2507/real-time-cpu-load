@@ -20,6 +20,7 @@ const cpuAverage = () => {
         //sum up the idle time
         totalIdle += cpu.times.idle;
     }
+    return {idle: totalIdle / cpus.length,  total: totalTick / cpus.length};
 }
 
 module.exports = cpuAverage;
