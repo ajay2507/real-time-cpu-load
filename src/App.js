@@ -3,14 +3,17 @@ import socketIOClient from "socket.io-client";
 import LoadMeter from './LoadMeter';
 import LineChartComponent from './LineChartComponent';
 
+import './index.css';
+
 class App extends Component {
   
    constructor() {
     console.log("constructor");
     super();
     this.state = {
-      response: false,
-      endpoint: "http://127.0.0.1:8000"
+      CPUload: false,
+      endpoint: "http://127.0.0.1:8000",
+      valueArray:[]
     };
   }
 
@@ -18,7 +21,15 @@ class App extends Component {
     console.log("componentdidmount");
     const { endpoint } = this.state;
     const socket = socketIOClient(endpoint, {transports: ['websocket', 'polling', 'flashsocket']});
-    socket.on("FromAPI", data => this.setState({response: data }));
+    socket.on("FromAPI", data => {
+      let array = this.state.valueArray;
+      array.push(this.state);
+      if(array.length > 4){
+         array.shift();
+      }
+      this.setState({CPUload: data, valueArray: array });
+  })
+
   }
 
 
@@ -27,8 +38,8 @@ class App extends Component {
     console.log(this.state);
     return (
       <div>
-        <LoadMeter value={this.state.response} />
-        <LineChartComponent />
+        <LoadMeter className="textCenter" value={this.state.CPUload} />
+        {this.state.CPUload && <LineChartComponent className="textCenter" value={this.state.valueArray} />}
       </div>
     );
   }

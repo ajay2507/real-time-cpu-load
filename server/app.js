@@ -12,6 +12,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 const initialLoad = require('./cpu_load')();
 
+/* Included for CORS issue */
 app.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -41,19 +42,19 @@ io.on("connection", socket => {
     () => {
     	calcLoad(socket);
     },
-    1000
+    2000
   );
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
 
-
+/* Calculate the cpu load async */
 const calcLoad = async socket => {
   try {
         let endLoad = require('./cpu_load')();
     	let idleDifference = endLoad.idle - initialLoad.idle;
         let totalDifference = endLoad.total - initialLoad.total;
         let cpuLoad = 100 - ~~(100 * idleDifference / totalDifference);
-        console.log("**Percentage**"+cpuLoad);
+        console.log("**Percentage of CPU Load**"+cpuLoad);
     
     socket.emit("FromAPI", cpuLoad);
   } catch (error) {
