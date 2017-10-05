@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import socketIOClient from "socket.io-client";
 import LoadMeter from './LoadMeter';
+import LineChartComponent from './LineChartComponent';
 
 class App extends Component {
   
@@ -27,7 +28,7 @@ class App extends Component {
     return (
       <div>
         <LoadMeter value={this.state.response} />
-        <h1>Ajay kumar</h1>
+        <LineChartComponent />
       </div>
     );
   }
