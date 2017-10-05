@@ -8,7 +8,7 @@ import './index.css';
 class App extends Component {
   
    constructor() {
-    console.log("constructor");
+    
     super();
     this.state = {
       CPUload: false,

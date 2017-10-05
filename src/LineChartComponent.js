@@ -10,7 +10,7 @@ class LineChartComponent extends Component {
   }
 
   render() {
-  	console.log(this.props);
+  	
     return (
       <div className="textCenter">
         <Header>System Load Since Page Load</Header>
